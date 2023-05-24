@@ -30,7 +30,8 @@ After the stunning and humiliating defeat of Real Madrid in the Champions League
 erDiagram
     User ||--|{ Opinions : creates
     User ||--|{ Predictions: creates
-    Match ||--o{ Opinions: have
+    MatchOpinions ||--o{ Match: have
+    MatchOpinions ||--o{ Opinions: have
     Match||--o{ Predictions: contains
     Competition ||--|{ Match: contains
 ```
