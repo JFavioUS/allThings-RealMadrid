@@ -14,6 +14,8 @@ After the stunning and humiliating defeat of Real Madrid in the Champions League
 
 ### Should Have
 - A user should be able to add their match result prediction in the form of points (e.g., 2-1, 0-0, etc).
+- A user should be able to read other users opinions and predictions.
+- A user should be able to a public or private opinion about a match.
 
 ### Could Have
 - A user could be able to add their match result prediction in the form of percentages (e.g., Real Madrid has 45% of winning, 10% of a draw, ad 45% of losing)
