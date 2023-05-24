@@ -35,3 +35,98 @@ erDiagram
     Match||--o{ Predictions: contains
     Competition ||--|{ Match: contains
 ```
+
+### Entity Relationship Model
+```mermaid
+%%{init: {'theme':'dark'}}%%
+erDiagram
+    user ||--|{ prediction : manages
+    user ||--|{ review : manages
+    user {
+        int id PK
+        text first_name
+        text second_name
+        text password
+    }
+    matchTeams ||--|{ match : includes
+    matchTeams ||--|{ team : contains
+    matchTeams {
+        int id PK
+        int awayTeamId FK
+        int localTeamId FK
+    }
+    match }|--|| competition : contains
+    match {
+        int id PK
+        int compatitionId FK
+        int stadiumId FK
+    }
+    team ||--|{ players : contains
+    team ||--|| stadium : includes
+    team {
+        int id PK
+        varchar name
+        varchar localCity
+        int matchesWon
+        int matchesLost
+        int goalsFavor
+        int goalsAgainst
+        int goalDifference
+        int matchesPlayed
+        int points
+    }
+    competition {
+        int id PK
+        varchar name
+        varchar description
+        varchar continent
+    }
+    stadium {
+        int id PK
+        varchar name
+        varchar country
+        varchar city
+    }
+    matchPlayers ||--|{ player : contain
+    matchPlayers ||--|{ match : includes
+    matchPlayers {
+        int id PK
+        int playerId FK
+        int matchId FK
+    }
+    player {
+        int id PK
+        int number
+        varchar name
+        varchar mainPosition
+        varchar otherPosition
+        int teamId FK
+    }
+    review {
+        int id PK
+        varchar title
+        varchar text
+        int performance
+        int userId FK
+    }
+    matchReviews ||--|{ review : includes
+    matchReviews ||--|{ match : contains
+    matchReviews {
+        int id PK
+        int match_id FK
+        int prediction_id FK
+    }
+    prediction {
+        int id PK
+        int away_goals
+        int local_goals
+        varchar endStatus
+    }
+    matchPredictions ||--|{ prediction : includes
+    match }|--|| matchPredictions : contains
+    matchPredictions {
+        int id PK
+        int match_id FK
+        int prediction_id FK
+    }
+```
