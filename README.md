@@ -25,8 +25,8 @@ After the stunning and humiliating defeat of Real Madrid in the Champions League
 ```mermaid
 %%{init: {'theme':'dark'}}%%
 erDiagram
-    User ||--o{ Opinions : manages
+    User ||--o{ Opinions : creates
     User ||--o{ Predictions: creates
-    Opinions ||--|{ Matches: includes
-    Matches||--|{ Predictions: contains
+    Match ||--|{ Opinions: have
+    Match||--|{ Predictions: contains
 ```
