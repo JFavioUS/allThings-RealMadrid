@@ -16,7 +16,8 @@ After the stunning and humiliating defeat of Real Madrid in the Champions League
 - A user should be able to add their match result prediction in the form of points (e.g., 2-1, 0-0, etc).
 
 ### Could Have
-- A user should be able to add their match result prediction in the form of percentages (e.g., Real Madrid has 45% of winning, 10% of a draw, ad 45% of losing)
+- A user could be able to add their match result prediction in the form of percentages (e.g., Real Madrid has 45% of winning, 10% of a draw, ad 45% of losing)
+- A user could be able to rank and point Real Madrid players who played in the match.
 
 ### Will not Have
 - A user will not be able to see other matches unrelated to Real Madrid.
