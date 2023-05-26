@@ -28,12 +28,19 @@ After the stunning and humiliating defeat of Real Madrid in the Champions League
 ```mermaid
 %%{init: {'theme':'dark'}}%%
 erDiagram
-    User ||--|{ Opinions : creates
-    User ||--|{ Predictions: creates
-    MatchOpinions ||--o{ Match: have
-    MatchOpinions ||--o{ Opinions: have
-    Match||--o{ Predictions: contains
-    Competition ||--|{ Match: contains
+    User -- Prediction : creates
+    User -- Review : creates
+    Match -- MatchTeam : includes
+    Team -- MatchTeam : contains
+    Match -- Competition : contains
+    Team -- Player : contains
+    Team -- Stadium : includes
+    Match -- MatchPlayers : includes
+    Player -- MatchPlayers : contain
+    Review -- MatchReviews : includes
+    Match -- MatchReviews : contains
+    Prediction -- MatchPredictions : includes
+    Match -- MatchPredictions : contains
 ```
 
 ### Entity Relationship Model
