@@ -58,7 +58,7 @@ erDiagram
     match }|--|| competition : contains
     match {
         int id PK
-        int compatitionId FK
+        int competitionId FK
         int stadiumId FK
     }
     team ||--|{ players : contains
@@ -67,13 +67,6 @@ erDiagram
         int id PK
         varchar name
         varchar localCity
-        int matchesWon
-        int matchesLost
-        int goalsFavor
-        int goalsAgainst
-        int goalDifference
-        int matchesPlayed
-        int points
     }
     competition {
         int id PK
@@ -98,8 +91,6 @@ erDiagram
         int id PK
         int number
         varchar name
-        varchar mainPosition
-        varchar otherPosition
         int teamId FK
     }
     review {
@@ -129,4 +120,5 @@ erDiagram
         int match_id FK
         int prediction_id FK
     }
+
 ```
