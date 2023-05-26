@@ -129,7 +129,7 @@ erDiagram
 
 
 ### API Specification
-User
+#### User
 
 GET /users - Return all users
 
@@ -139,7 +139,7 @@ PUT /users/{user_id} - Update a user using a given id
 
 GET /users/{user_id} - Return the user for the given id
 
-Review
+#### Review
 
 GET /reviews - Return all reviews
 
@@ -149,7 +149,7 @@ PUT /reviews/{review_id} - Update a review using a given id
 
 GET /reviews/{review_id} - Return the review for the given id
 
-Match
+#### Match
 
 GET /matches - Return all matches
 
@@ -159,7 +159,7 @@ PUT /matches/{match_id} - Update a match using a given id
 
 GET /matches/{match_id} - Return the match for the given id
 
-Team
+#### Team
 
 GET /teams - Return all teams
 
@@ -169,7 +169,7 @@ PUT /teams/{team_id} - Update a team using a given id
 
 GET /teams/{team_id} - Return the team for the given id
 
-Player
+#### Player
 
 GET /players - Return all players
 
@@ -179,7 +179,7 @@ PUT /players/{player_id} - Update a player using a given id
 
 GET /players/{player_id} - Return the player for the given id
 
-Stadium
+#### Stadium
 
 GET /stadiums - Return all stadiums
 
@@ -189,7 +189,7 @@ PUT /stadiums/{stadium_id} - Update a stadium using a given id
 
 GET /stadiums/{stadium_id} - Return the stadium for the given id
 
-Competition
+#### Competition
 
 GET /competitions - Return all competitions
 
@@ -199,7 +199,7 @@ PUT /competitions/{competition_id} - Update a competition using a given id
 
 GET /competitions/{competition_id} - Return the competition for the given id
 
-Prediction
+#### Prediction
 
 GET /predictions - Return all predictions
 
