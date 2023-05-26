@@ -33,10 +33,7 @@ erDiagram
     Match ||--|{ MatchTeam : includes
     Team ||--|{ MatchTeam : contains
     Match ||--|{ Competition : contains
-    Team ||--|{ Player : contains
     Team ||--|{ Stadium : includes
-    Match ||--|{ MatchPlayers : includes
-    Player ||--|{ MatchPlayers : contain
     Review ||--|{ MatchReviews : includes
     Match ||--|{ MatchReviews : contains
     Prediction ||--|{ MatchPredictions : includes
