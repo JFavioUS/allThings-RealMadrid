@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { json, urlencoded, Request, Response } from "express";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import {
@@ -14,7 +14,7 @@ import {
 const app = express();
 const port = 3000;
 
-// Swagger
+// Swagger variables
 const swaggerDefinition = {
   openapi: "3.0.0",
   info: {
@@ -33,6 +33,9 @@ const swaggerSpec = swaggerJSDoc({
   swaggerDefinition,
   apis: ["./routers/*.ts"],
 });
+
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.use("/swagger.json", (req: Request, res: Response) => {
