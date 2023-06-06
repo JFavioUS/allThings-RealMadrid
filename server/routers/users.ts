@@ -1,8 +1,11 @@
 import { Router } from "express";
 import { check } from "express-validator";
+
+import { usersController } from "../controllers";
 import validate from "../utils/validation";
 
 const userRouter = Router();
+
 const userValidation = [
   check("username")
     .trim()
@@ -68,9 +71,7 @@ const userValidation = [
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-userRouter.route("/").get((req, res) => {
-  res.send("Users");
-});
+userRouter.route("/").get(usersController.getUsers);
 
 /**
  * @openapi
@@ -113,9 +114,7 @@ userRouter.route("/").get((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-userRouter.route("/:id").get((req, res) => {
-  res.send("User number: " + req.params.id);
-});
+userRouter.route("/:id(\\d+)").get(usersController.getUser);
 
 /**
  * @openapi
@@ -150,9 +149,9 @@ userRouter.route("/:id").get((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-userRouter.route("/").post(userValidation, validate, (req, res) => {
-  res.send("User created");
-});
+userRouter
+  .route("/")
+  .post(userValidation, validate, usersController.createUser);
 
 /**
  * @openapi
@@ -187,9 +186,9 @@ userRouter.route("/").post(userValidation, validate, (req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-userRouter.route("/:id").put(userValidation, validate, (req, res) => {
-  res.send("User updated" + req.params.id);
-});
+userRouter
+  .route("/:id")
+  .put(userValidation, validate, usersController.updateUser);
 
 /**
  * @openapi
@@ -224,8 +223,6 @@ userRouter.route("/:id").put(userValidation, validate, (req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-userRouter.route("/:id").delete((req, res) => {
-  res.send("User deleted " + req.params.id);
-});
+userRouter.route("/:id").delete(usersController.deleteUser);
 
 export { userRouter };

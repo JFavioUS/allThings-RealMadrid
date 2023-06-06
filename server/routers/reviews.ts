@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { check } from "express-validator";
+
+import { reviewsController } from "../controllers";
 import validate from "../utils/validation";
 
 const reviewRouter = Router();
@@ -51,9 +53,7 @@ const reviewValidation = [
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-reviewRouter.route("/").get((req, res) => {
-  res.send("Reviews");
-});
+reviewRouter.route("/").get(reviewsController.getReviews);
 
 /**
  * @openapi
@@ -96,9 +96,7 @@ reviewRouter.route("/").get((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-reviewRouter.route("/:id").get((req, res) => {
-  res.send("Review number: " + req.params.id);
-});
+reviewRouter.route("/:id").get(reviewsController.getReview);
 
 /**
  * @openapi
@@ -133,9 +131,9 @@ reviewRouter.route("/:id").get((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-reviewRouter.route("/").post(reviewValidation, validate, (req, res) => {
-  res.send("Review created");
-});
+reviewRouter
+  .route("/")
+  .post(reviewValidation, validate, reviewsController.createReview);
 
 /**
  * @openapi
@@ -170,9 +168,9 @@ reviewRouter.route("/").post(reviewValidation, validate, (req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-reviewRouter.route("/:id").put(reviewValidation, validate, (req, res) => {
-  res.send("Review updated" + req.params.id);
-});
+reviewRouter
+  .route("/:id")
+  .put(reviewValidation, validate, reviewsController.updateReview);
 
 /**
  * @openapi
@@ -207,8 +205,6 @@ reviewRouter.route("/:id").put(reviewValidation, validate, (req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-reviewRouter.route("/:id").delete((req, res) => {
-  res.send("Review deleted " + req.params.id);
-});
+reviewRouter.route("/:id").delete(reviewsController.deleteReview);
 
 export { reviewRouter };

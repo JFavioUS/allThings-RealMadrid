@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { check } from "express-validator";
+
+import { stadiumsController } from "../controllers";
 import validate from "../utils/validation";
 
 const stadiumRouter = Router();
@@ -51,9 +53,9 @@ const stadiumValidation = [
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-stadiumRouter.route("/").post(stadiumValidation, validate, (req, res) => {
-  res.send("Stadium created");
-});
+stadiumRouter
+  .route("/")
+  .post(stadiumValidation, validate, stadiumsController.createStadium);
 
 /**
  * @openapi
@@ -88,9 +90,9 @@ stadiumRouter.route("/").post(stadiumValidation, validate, (req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-stadiumRouter.route("/:id").put(stadiumValidation, validate, (req, res) => {
-  res.send("Stadium updated" + req.params.id);
-});
+stadiumRouter
+  .route("/:id")
+  .put(stadiumValidation, validate, stadiumsController.updateStadium);
 
 /**
  * @openapi
@@ -125,8 +127,6 @@ stadiumRouter.route("/:id").put(stadiumValidation, validate, (req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-stadiumRouter.route("/:id").delete((req, res) => {
-  res.send("Stadium deleted " + req.params.id);
-});
+stadiumRouter.route("/:id").delete(stadiumsController.deleteStadium);
 
 export { stadiumRouter };

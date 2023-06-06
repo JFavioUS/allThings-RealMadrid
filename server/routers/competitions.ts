@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { competitionsController } from "../controllers";
 
 const competitionRouter = Router();
 
@@ -43,9 +44,7 @@ const competitionRouter = Router();
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-competitionRouter.route("/").get((req, res) => {
-  res.send("Competitions");
-});
+competitionRouter.route("/").get(competitionsController.getCompetitions);
 
 /**
  * @openapi
@@ -88,9 +87,7 @@ competitionRouter.route("/").get((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-competitionRouter.route("/:id").get((req, res) => {
-  res.send("Competition number: " + req.params.id);
-});
+competitionRouter.route("/:id").get(competitionsController.getCompetition);
 
 /**
  * @openapi
@@ -125,9 +122,7 @@ competitionRouter.route("/:id").get((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-competitionRouter.route("/").post((req, res) => {
-  res.send("Competition created");
-});
+competitionRouter.route("/").post(competitionsController.createCompetition);
 
 /**
  * @openapi
@@ -162,9 +157,7 @@ competitionRouter.route("/").post((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-competitionRouter.route("/:id").put((req, res) => {
-  res.send("Competition updated" + req.params.id);
-});
+competitionRouter.route("/:id").put(competitionsController.updateCompetition);
 
 /**
  * @openapi
@@ -199,8 +192,8 @@ competitionRouter.route("/:id").put((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-competitionRouter.route("/:id").delete((req, res) => {
-  res.send("Competition deleted: " + req.params.id);
-});
+competitionRouter
+  .route("/:id")
+  .delete(competitionsController.deleteCompetition);
 
 export { competitionRouter };

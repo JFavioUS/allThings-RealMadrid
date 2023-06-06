@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { matchesController } from "../controllers";
 
 const matchRouter = Router();
 
@@ -43,9 +44,7 @@ const matchRouter = Router();
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-matchRouter.route("/").get((req, res) => {
-  res.send("Matches");
-});
+matchRouter.route("/").get(matchesController.getMatches);
 
 /**
  * @openapi
@@ -88,9 +87,7 @@ matchRouter.route("/").get((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-matchRouter.route("/:id").get((req, res) => {
-  res.send("Match number: " + req.params.id);
-});
+matchRouter.route("/:id").get(matchesController.getMatch);
 
 /**
  * @openapi
@@ -125,9 +122,7 @@ matchRouter.route("/:id").get((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-matchRouter.route("/").post((req, res) => {
-  res.send("Match created");
-});
+matchRouter.route("/").post(matchesController.createMatch);
 
 /**
  * @openapi
@@ -162,9 +157,7 @@ matchRouter.route("/").post((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-matchRouter.route("/:id").put((req, res) => {
-  res.send("Match updated: " + req.params.id);
-});
+matchRouter.route("/:id").put(matchesController.updateMatch);
 
 /**
  * @openapi
@@ -199,8 +192,6 @@ matchRouter.route("/:id").put((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-matchRouter.route("/:id").delete((req, res) => {
-  res.send("Match deleted: " + req.params.id);
-});
+matchRouter.route("/:id").delete(matchesController.deleteMatch);
 
 export { matchRouter };

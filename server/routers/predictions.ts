@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { check } from "express-validator";
+
+import { predictionsController } from "../controllers";
 import validate from "../utils/validation";
 
 const predictionRouter = Router();
@@ -53,9 +55,7 @@ const predictionValidation = [
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-predictionRouter.route("/").get((req, res) => {
-  res.send("Predictions");
-});
+predictionRouter.route("/").get(predictionsController.getPredictions);
 
 /**
  * @openapi
@@ -98,9 +98,7 @@ predictionRouter.route("/").get((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-predictionRouter.route("/:id").get((req, res) => {
-  res.send("Prediction number: " + req.params.id);
-});
+predictionRouter.route("/:id").get(predictionsController.getPrediction);
 
 /**
  * @openapi
@@ -135,9 +133,9 @@ predictionRouter.route("/:id").get((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-predictionRouter.route("/").post(predictionValidation, validate, (req, res) => {
-  res.send("Prediction created");
-});
+predictionRouter
+  .route("/")
+  .post(predictionValidation, validate, predictionsController.createPrediction);
 
 /**
  * @openapi
@@ -174,9 +172,7 @@ predictionRouter.route("/").post(predictionValidation, validate, (req, res) => {
  */
 predictionRouter
   .route("/:id")
-  .put(predictionValidation, validate, (req, res) => {
-    res.send("Prediction updated" + req.params.id);
-  });
+  .put(predictionValidation, validate, predictionsController.updatePrediction);
 
 /**
  * @openapi
@@ -211,8 +207,6 @@ predictionRouter
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-predictionRouter.route("/:id").delete((req, res) => {
-  res.send("Prediction deleted " + req.params.id);
-});
+predictionRouter.route("/:id").delete(predictionsController.deletePrediction);
 
 export { predictionRouter };

@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { check } from "express-validator";
+
+import { teamsController } from "../controllers";
 import validate from "../utils/validation";
 
 const teamRouter = Router();
@@ -59,9 +61,7 @@ const teamValidation = [
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-teamRouter.route("/").get((req, res) => {
-  res.send("teams");
-});
+teamRouter.route("/").get(teamsController.getTeams);
 
 /**
  * @openapi
@@ -104,9 +104,7 @@ teamRouter.route("/").get((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-teamRouter.route("/:id").get((req, res) => {
-  res.send("Team number: " + req.params.id);
-});
+teamRouter.route("/:id").get(teamsController.getTeam);
 
 /**
  * @openapi
@@ -141,9 +139,9 @@ teamRouter.route("/:id").get((req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-teamRouter.route("/").post(teamValidation, validate, (req, res) => {
-  res.send("Team created");
-});
+teamRouter
+  .route("/")
+  .post(teamValidation, validate, teamsController.createTeam);
 
 /**
  * @openapi
@@ -178,9 +176,9 @@ teamRouter.route("/").post(teamValidation, validate, (req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-teamRouter.route("/:id").put(teamValidation, validate, (req, res) => {
-  res.send("Team updated" + req.params.id);
-});
+teamRouter
+  .route("/:id")
+  .put(teamValidation, validate, teamsController.updateTeam);
 
 /**
  * @openapi
@@ -215,8 +213,6 @@ teamRouter.route("/:id").put(teamValidation, validate, (req, res) => {
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-teamRouter.route("/:id").delete((req, res) => {
-  res.send("Team deleted " + req.params.id);
-});
+teamRouter.route("/:id").delete(teamsController.deleteTeam);
 
 export { teamRouter };

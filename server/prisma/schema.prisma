@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model competitions {
+  id      Int       @id(map: "competitions_pk") @default(autoincrement())
+  name    String?
+  scope   String?
+  matches matches[]
+}
+
+model flyway_schema_history {
+  installed_rank Int      @id(map: "flyway_schema_history_pk")
+  version        String?  @db.VarChar(50)
+  description    String   @db.VarChar(200)
+  type           String   @db.VarChar(20)
+  script         String   @db.VarChar(1000)
+  checksum       Int?
+  installed_by   String   @db.VarChar(100)
+  installed_on   DateTime @default(now()) @db.Timestamp(6)
+  execution_time Int
+  success        Boolean
+
+  @@index([success], map: "flyway_schema_history_s_idx")
+}
+
+model match_predictions {
+  id            Int          @id(map: "match_predictions_pk") @default(autoincrement())
+  match_id      Int?
+  prediction_id Int?
+  created_date  DateTime     @default(now()) @db.Timestamp(6)
+  updated_date  DateTime?    @db.Timestamp(6)
+  matches       matches?     @relation(fields: [match_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  predictions   predictions? @relation(fields: [prediction_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model match_reviews {
+  id        Int      @id(map: "match_reviews_pk") @default(autoincrement())
+  match_id  Int?
+  review_id Int?
+  matches   matches? @relation(fields: [match_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  reviews   reviews? @relation(fields: [review_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model matches {
+  id                                Int                 @id(map: "matches_pk") @default(autoincrement())
+  stadium_id                        Int?
+  away_team_id                      Int?
+  home_team_id                      Int?
+  competition_id                    Int?
+  match_predictions                 match_predictions[]
+  match_reviews                     match_reviews[]
+  teams_matches_away_team_idToteams teams?              @relation("matches_away_team_idToteams", fields: [away_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  competitions                      competitions?       @relation(fields: [competition_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  teams_matches_home_team_idToteams teams?              @relation("matches_home_team_idToteams", fields: [home_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  stadiums                          stadiums?           @relation(fields: [stadium_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model predictions {
+  id                Int                 @id(map: "prediction_pk") @default(autoincrement())
+  away_goals        Int?
+  home_goals        Int?
+  user_id           Int?
+  match_predictions match_predictions[]
+  users             users?              @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model reviews {
+  id            Int             @id(map: "reviews_pk") @default(autoincrement())
+  title         String?
+  content       String?
+  user_id       Int?
+  match_reviews match_reviews[]
+  users         users?          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model stadiums {
+  id      Int       @id(map: "stadiums_pk") @default(autoincrement())
+  name    String?
+  city    String?
+  country String?
+  matches matches[]
+  teams   teams[]
+}
+
+model teams {
+  id                                  Int       @id(map: "teams_pk") @default(autoincrement())
+  name                                String?
+  city                                String?
+  stadium_id                          Int?
+  matches_matches_away_team_idToteams matches[] @relation("matches_away_team_idToteams")
+  matches_matches_home_team_idToteams matches[] @relation("matches_home_team_idToteams")
+  stadiums                            stadiums? @relation(fields: [stadium_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  id          Int           @id(map: "users_pk") @default(autoincrement())
+  username    String?
+  admin       Boolean?
+  email       String?
+  password    String?
+  predictions predictions[]
+  reviews     reviews[]
+}
+
+
