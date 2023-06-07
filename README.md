@@ -102,7 +102,6 @@ erDiagram
         int id PK
         int away_goals
         int local_goals
-        varchar endStatus
     }
     matchPredictions ||--|{ prediction : includes
     match }|--|| matchPredictions : contains
