@@ -84,19 +84,6 @@ erDiagram
         varchar country
         varchar city
     }
-    matchPlayers ||--|{ player : contain
-    matchPlayers ||--|{ match : includes
-    matchPlayers {
-        int id PK
-        int playerId FK
-        int matchId FK
-    }
-    player {
-        int id PK
-        int number
-        varchar name
-        int teamId FK
-    }
     review {
         int id PK
         varchar title
