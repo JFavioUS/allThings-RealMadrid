@@ -1,7 +1,16 @@
 import { Router } from "express";
+import { check } from "express-validator";
+
 import { matchesController } from "../controllers";
+import validate from "../utils/validation";
 
 const matchRouter = Router();
+
+const matchValidation = [
+  check("away_team_id").exists(),
+  check("home_team_id").exists(),
+  check("competition_id").exists(),
+];
 
 /**
  * @openapi
@@ -122,7 +131,9 @@ matchRouter.route("/:id").get(matchesController.getMatch);
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-matchRouter.route("/").post(matchesController.createMatch);
+matchRouter
+  .route("/")
+  .post(matchValidation, validate, matchesController.createMatch);
 
 /**
  * @openapi
@@ -157,7 +168,9 @@ matchRouter.route("/").post(matchesController.createMatch);
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-matchRouter.route("/:id").put(matchesController.updateMatch);
+matchRouter
+  .route("/:id")
+  .put(matchValidation, validate, matchesController.updateMatch);
 
 /**
  * @openapi

@@ -1,91 +1,107 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
 async function getUsers(req: Request, res: Response) {
-  const users = await prisma.users.findMany({
-    select: {
-      id: true,
-      username: true,
-      email: true,
-    },
-  });
+  try {
+    const users = await prisma.users.findMany({
+      select: {
+        id: true,
+        username: true,
+        email: true,
+      },
+    });
 
-  if (!users) {
-    return res.status(404).json({ message: "Users not found" });
+    if (!users.length) {
+      return res.status(204).json({ message: "No content in user's endpoint" });
+    }
+
+    res.status(200).json(users);
+  } catch (error) {
+    throw new Error(error);
   }
-
-  return res.status(200).json(users);
 }
 
 async function getUser(req: Request, res: Response) {
-  const user = await prisma.users.findUnique({
-    where: {
-      id: parseInt(req.params.id),
-    },
-    select: {
-      id: true,
-      username: true,
-      email: true,
-    },
-  });
+  const { id } = req.params;
 
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
+  try {
+    const user = await prisma.users.findUnique({
+      where: { id: parseInt(id) },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    throw new Error(error);
   }
-
-  return res.status(200).json(user);
 }
 
 async function createUser(req: Request, res: Response) {
-  const { username, email, password } = req.body;
-  await prisma.users.create({
-    data: {
-      username,
-      email,
-      password,
-    },
-  });
+  const { userData } = req.body;
 
-  res.sendStatus(201);
+  try {
+    await prisma.users.create({
+      data: userData,
+    });
+
+    res.status(201);
+  } catch (error) {
+    throw new Error(error);
+  }
 }
 
 async function updateUser(req: Request, res: Response) {
-  const { username, email, password } = req.body;
   const { id } = req.params;
+  const { userData } = req.body;
 
-  await prisma.users.update({
-    where: {
-      id: parseInt(id),
-    },
-    data: {
-      username,
-      email,
-      password,
-    },
-  });
+  try {
+    const updatedUser = await prisma.users.update({
+      where: { id: parseInt(id) },
+      data: userData,
+    });
 
-  res.send(204);
+    if (!updatedUser) {
+      return res.status(404).json({ message: "No user found" });
+    }
+
+    res.status(200);
+  } catch (error) {
+    throw new Error(error);
+  }
 }
 
 async function deleteUser(req: Request, res: Response) {
   const { id } = req.params;
 
-  await prisma.users.delete({
-    where: {
-      id: parseInt(id),
-    },
-  });
+  try {
+    const deletedUser = await prisma.users.delete({
+      where: { id: parseInt(id) },
+    });
 
-  res.sendStatus(204);
+    if (!deletedUser) {
+      return res.status(404).json({ message: "No user found" });
+    }
+
+    res.status(200);
+  } catch (error) {
+    throw new Error(error);
+  }
 }
 
-const usersController = {
+export const usersController = {
   getUsers,
   getUser,
   createUser,
   updateUser,
   deleteUser,
 };
-
-export { usersController };

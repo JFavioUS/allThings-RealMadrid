@@ -1,7 +1,11 @@
 import { Router } from "express";
+import { check } from "express-validator";
+
 import { competitionsController } from "../controllers";
+import validate from "../utils/validation";
 
 const competitionRouter = Router();
+const competitionValidation = [check("name").exists(), check("scope").exists()];
 
 /**
  * @openapi
@@ -87,7 +91,9 @@ competitionRouter.route("/").get(competitionsController.getCompetitions);
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-competitionRouter.route("/:id").get(competitionsController.getCompetition);
+competitionRouter
+  .route("/:id")
+  .get(competitionValidation, validate, competitionsController.getCompetition);
 
 /**
  * @openapi
@@ -122,7 +128,13 @@ competitionRouter.route("/:id").get(competitionsController.getCompetition);
  *                    summary: An example JSON response
  *                    value: '{ "message": "Internal Server Error" } '
  */
-competitionRouter.route("/").post(competitionsController.createCompetition);
+competitionRouter
+  .route("/")
+  .post(
+    competitionValidation,
+    validate,
+    competitionsController.createCompetition
+  );
 
 /**
  * @openapi
