@@ -22,7 +22,7 @@ const competitionValidation = [check("name").exists(), check("scope").exists()];
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '[ {"id": 1, "name": "LaLiga Santander", "scope": "Spain"" }, {"id": 2, "name": "UEFA Champions League", "scope": "Europe" } ]'
+ *                  value: '[ { "id": 1, "name": "LaLiga Santander", "scope": "Spain" }, { "id": 2, "name": "UEFA Champions League", "scope": "Europe" } ]'
  *        204:
  *          description: No Content
  *          content:
@@ -65,7 +65,7 @@ competitionRouter.route("/").get(competitionsController.getCompetitions);
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{"id": 1, "name": "LaLiga Santander", "scope": "Spain"'
+ *                  value: '{"id": 1, "name": "LaLiga Santander", "scope": "Spain"}'
  *        204:
  *          description: No Content
  *          content:
@@ -110,7 +110,7 @@ competitionRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Competition Created" }'
+ *                  value: '{ "message": "Competition Created" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -151,7 +151,7 @@ competitionRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Competition Updated" }'
+ *                  value: '{ "message": "Competition Updated" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -186,7 +186,7 @@ competitionRouter.route("/:id").put(competitionsController.updateCompetition);
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Competition Deleted" }'
+ *                  value: '{ "message": "Competition Deleted" }'
  *        401:
  *          description: Unauthorized
  *          content:

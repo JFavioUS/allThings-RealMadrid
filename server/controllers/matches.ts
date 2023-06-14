@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../utils/prisma";
 
 async function getMatches(req: Request, res: Response) {
   try {
@@ -13,7 +11,7 @@ async function getMatches(req: Request, res: Response) {
 
     res.status(200).json(matches);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
@@ -31,12 +29,16 @@ async function getMatch(req: Request, res: Response) {
 
     res.status(200).json(match);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
 async function createMatch(req: Request, res: Response) {
   const { matchData } = req.body;
+
+  if (!matchData) {
+    return res.status(400).json({ message: "matchData is required" });
+  }
 
   try {
     const newMatch = await prisma.matches.create({
@@ -45,13 +47,17 @@ async function createMatch(req: Request, res: Response) {
 
     res.status(201).json(newMatch);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
 async function updateMatch(req: Request, res: Response) {
   const { id } = req.params;
   const { matchData } = req.body;
+
+  if (!matchData) {
+    return res.status(400).json({ message: "matchData is required" });
+  }
 
   try {
     const updatedMatch = await prisma.matches.update({
@@ -65,7 +71,7 @@ async function updateMatch(req: Request, res: Response) {
 
     res.status(200).json(updatedMatch);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
@@ -83,7 +89,7 @@ async function deleteMatch(req: Request, res: Response) {
 
     res.status(200).json(deletedMatch);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 

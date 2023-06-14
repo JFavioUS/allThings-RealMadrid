@@ -1,7 +1,9 @@
 import express, { json, urlencoded, Request, Response } from "express";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
+
 import {
+  authRouter,
   competitionRouter,
   matchRouter,
   predictionRouter,
@@ -10,6 +12,8 @@ import {
   teamRouter,
   userRouter,
 } from "./routers";
+import { verifyToken } from "./middleware/authentication";
+import { authorise } from "./middleware/authorization";
 
 const app = express();
 const port = 3000;
@@ -42,13 +46,18 @@ app.use("/swagger.json", (req: Request, res: Response) => {
   res.json(swaggerSpec).status(200);
 });
 
+app.use("/users", userRouter);
+app.use("/auth", authRouter);
+
+app.all("*", verifyToken);
+app.all("*", authorise);
+
 app.use("/competitions", competitionRouter);
 app.use("/matches", matchRouter);
 app.use("/predictions", predictionRouter);
 app.use("/reviews", reviewRouter);
 app.use("/stadiums", stadiumRouter);
 app.use("/teams", teamRouter);
-app.use("/users", userRouter);
 
 app.listen(port, () => {
   console.log("Example app listening on port 3000!");

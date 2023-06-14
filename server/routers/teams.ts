@@ -35,7 +35,7 @@ const teamValidation = [
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '[ {"id": 11, "shortName": "Real Madrid", "city": "Madrid", "country": "Spain"" }, {"id": 2, "shortName": "Barcelona", "city": "Barcelona", "country": "Spain" } ]'
+ *                  value: '[ {"id": 11, "shortName": "Real Madrid", "city": "Madrid", "country": "Spain" }, {"id": 2, "shortName": "Barcelona", "city": "Barcelona", "country": "Spain" } ]'
  *        204:
  *          description: No Content
  *          content:
@@ -78,7 +78,7 @@ teamRouter.route("/").get(teamsController.getTeams);
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{"id": 11, "shortName": "Real Madrid", "city": "Madrid", "country": "Spain"" }'
+ *                  value: '{"id": 11, "shortName": "Real Madrid", "city": "Madrid", "country": "Spain" }'
  *        204:
  *          description: No Content
  *          content:
@@ -121,7 +121,7 @@ teamRouter.route("/:id").get(teamsController.getTeam);
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Team Created" }'
+ *                  value: '{ "message": "Team Created" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -158,7 +158,7 @@ teamRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Team Updated" }'
+ *                  value: '{ "message": "Team Updated" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -195,7 +195,7 @@ teamRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Team Deleted" }'
+ *                  value: '{ "message": "Team Deleted" }'
  *        401:
  *          description: Unauthorized
  *          content:

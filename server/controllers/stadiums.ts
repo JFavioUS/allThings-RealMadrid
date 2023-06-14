@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../utils/prisma";
 
 async function getStadiums(req: Request, res: Response) {
   try {
@@ -13,7 +11,7 @@ async function getStadiums(req: Request, res: Response) {
 
     res.status(200).json(stadiums);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
@@ -31,12 +29,16 @@ async function getStadium(req: Request, res: Response) {
 
     res.status(200).json(stadium);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
 async function createStadium(req: Request, res: Response) {
   const { stadiumData } = req.body;
+
+  if (!stadiumData) {
+    return res.status(400).json({ message: "stadiumData is required" });
+  }
 
   try {
     const newStadium = await prisma.stadiums.create({
@@ -45,18 +47,22 @@ async function createStadium(req: Request, res: Response) {
 
     res.status(201).json(newStadium);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
 async function updateStadium(req: Request, res: Response) {
   const { id } = req.params;
-  const { stadiumData } = req.body;
+  const { matchData } = req.body;
+
+  if (!matchData) {
+    return res.status(400).json({ message: "matchData is required" });
+  }
 
   try {
     const updatedStadium = await prisma.stadiums.update({
       where: { id: parseInt(id) },
-      data: stadiumData,
+      data: matchData,
     });
 
     if (!updatedStadium) {
@@ -65,7 +71,7 @@ async function updateStadium(req: Request, res: Response) {
 
     res.status(200).json(updatedStadium);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
@@ -83,7 +89,7 @@ async function deleteStadium(req: Request, res: Response) {
 
     res.status(200).json(deletedStadium);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 

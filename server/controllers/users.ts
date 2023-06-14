@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -19,7 +20,7 @@ async function getUsers(req: Request, res: Response) {
 
     res.status(200).json(users);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
@@ -42,32 +43,45 @@ async function getUser(req: Request, res: Response) {
 
     res.status(200).json(user);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
 async function createUser(req: Request, res: Response) {
-  const { userData } = req.body;
+  const { email, password, username } = req.body;
 
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const data = {
+    email,
+    password: hashedPassword,
+    username,
+  };
   try {
     await prisma.users.create({
-      data: userData,
+      data,
     });
 
-    res.status(201);
+    return res.status(201);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
 async function updateUser(req: Request, res: Response) {
   const { id } = req.params;
-  const { userData } = req.body;
+  const { email, password, username } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
 
+  const data = {
+    email,
+    password: hashedPassword,
+    username,
+  };
   try {
     const updatedUser = await prisma.users.update({
       where: { id: parseInt(id) },
-      data: userData,
+      data,
     });
 
     if (!updatedUser) {
@@ -76,7 +90,7 @@ async function updateUser(req: Request, res: Response) {
 
     res.status(200);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
@@ -94,7 +108,7 @@ async function deleteUser(req: Request, res: Response) {
 
     res.status(200);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 

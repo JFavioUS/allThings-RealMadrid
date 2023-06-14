@@ -113,7 +113,7 @@ matchRouter.route("/:id").get(matchesController.getMatch);
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Match Created" }'
+ *                  value: '{ "message": "Match Created" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -150,7 +150,7 @@ matchRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Match Updated" }'
+ *                  value: '{ "message": "Match Updated" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -187,7 +187,7 @@ matchRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Match Deleted" }'
+ *                  value: '{ "message": "Match Deleted" }'
  *        401:
  *          description: Unauthorized
  *          content:

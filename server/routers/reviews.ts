@@ -113,7 +113,7 @@ reviewRouter.route("/:id").get(reviewsController.getReview);
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Review Created" }'
+ *                  value: '{ "message": "Review Created" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -150,7 +150,7 @@ reviewRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Review Updated" }'
+ *                  value: '{ "message": "Review Updated" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -187,7 +187,7 @@ reviewRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Review Deleted" }'
+ *                  value: '{ "message": "Review Deleted" }'
  *        401:
  *          description: Unauthorized
  *          content:

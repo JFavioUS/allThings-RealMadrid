@@ -35,7 +35,7 @@ const stadiumValidation = [
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Stadium Created" }'
+ *                  value: '{ "message": "Stadium Created" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -72,7 +72,7 @@ stadiumRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Stadium Updated" }'
+ *                  value: '{ "message": "Stadium Updated" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -109,7 +109,7 @@ stadiumRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Stadium Deleted" }'
+ *                  value: '{ "message": "Stadium Deleted" }'
  *        401:
  *          description: Unauthorized
  *          content:

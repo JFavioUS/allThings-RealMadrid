@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../utils/prisma";
 
 async function getPredictions(req: Request, res: Response) {
   try {
@@ -13,7 +11,7 @@ async function getPredictions(req: Request, res: Response) {
 
     res.status(200).json(predictions);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
@@ -31,12 +29,16 @@ async function getPrediction(req: Request, res: Response) {
 
     res.status(200).json(prediction);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
 async function createPrediction(req: Request, res: Response) {
   const { predictionData } = req.body;
+
+  if (!predictionData) {
+    return res.status(400).json({ message: "predictionData is required" });
+  }
 
   try {
     const newPrediction = await prisma.predictions.create({
@@ -45,18 +47,22 @@ async function createPrediction(req: Request, res: Response) {
 
     res.status(201).json(newPrediction);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
 async function updatePrediction(req: Request, res: Response) {
   const { id } = req.params;
-  const { predictionData } = req.body;
+  const { matchData } = req.body;
+
+  if (!matchData) {
+    return res.status(400).json({ message: "matchData is required" });
+  }
 
   try {
     const updatedPrediction = await prisma.predictions.update({
       where: { id: parseInt(id) },
-      data: predictionData,
+      data: matchData,
     });
 
     if (!updatedPrediction) {
@@ -65,7 +71,7 @@ async function updatePrediction(req: Request, res: Response) {
 
     res.status(200).json(updatedPrediction);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
@@ -83,7 +89,7 @@ async function deletePrediction(req: Request, res: Response) {
 
     res.status(200).json(deletedPrediction);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 

@@ -1,3 +1,4 @@
+export * from "./authentication";
 export * from "./competitions";
 export * from "./matches";
 export * from "./predictions";

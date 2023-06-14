@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../utils/prisma";
 
 async function getReviews(req: Request, res: Response) {
   try {
@@ -13,7 +11,7 @@ async function getReviews(req: Request, res: Response) {
 
     res.status(200).json(reviews);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
@@ -31,12 +29,16 @@ async function getReview(req: Request, res: Response) {
 
     res.status(200).json(review);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
 async function createReview(req: Request, res: Response) {
   const { reviewData } = req.body;
+
+  if (!reviewData) {
+    return res.status(400).json({ message: "reviewData is required" });
+  }
 
   try {
     const newReview = await prisma.reviews.create({
@@ -45,18 +47,22 @@ async function createReview(req: Request, res: Response) {
 
     res.status(201).json(newReview);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
 async function updateReview(req: Request, res: Response) {
   const { id } = req.params;
-  const { reviewData } = req.body;
+  const { matchData } = req.body;
+
+  if (!matchData) {
+    return res.status(400).json({ message: "matchData is required" });
+  }
 
   try {
     const updatedReview = await prisma.reviews.update({
       where: { id: parseInt(id) },
-      data: reviewData,
+      data: matchData,
     });
 
     if (!updatedReview) {
@@ -65,7 +71,7 @@ async function updateReview(req: Request, res: Response) {
 
     res.status(200).json(updatedReview);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 
@@ -83,7 +89,7 @@ async function deleteReview(req: Request, res: Response) {
 
     res.status(200).json(deletedReview);
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ message: "An error occurred", error });
   }
 }
 

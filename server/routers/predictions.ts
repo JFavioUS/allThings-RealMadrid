@@ -29,7 +29,7 @@ const predictionValidation = [
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '[ {"author": faviosauto, "awayGoals": 1, "homeGoals": 2 }, {"author": faviosauto, "awayGoals": 2, "homeGoals": 1 } ]'
+ *                  value: '[ {"author": "faviosauto", "awayGoals": 1, "homeGoals": 2, "matchId": 1 }, {"author": "faviosauto", "awayGoals": 2, "homeGoals": 1, "matchId": 2 } ]'
  *        204:
  *          description: No Content
  *          content:
@@ -72,7 +72,7 @@ predictionRouter.route("/").get(predictionsController.getPredictions);
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ "author": faviosauto, "awayGoals": 1, "homeGoals": 2 }'
+ *                  value: '{ "author": "faviosauto", "awayGoals": 1, "homeGoals": 2, "matchId": 1 }'
  *        204:
  *          description: No Content
  *          content:
@@ -115,7 +115,7 @@ predictionRouter.route("/:id").get(predictionsController.getPrediction);
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Prediction Created" }'
+ *                  value: '{ "message": "Prediction Created" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -152,7 +152,7 @@ predictionRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Prediction Updated" }'
+ *                  value: '{ "message": "Prediction Updated" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -189,7 +189,7 @@ predictionRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "Prediction Deleted" }'
+ *                  value: '{ "message": "Prediction Deleted" }'
  *        401:
  *          description: Unauthorized
  *          content:

@@ -45,7 +45,7 @@ const userValidation = [
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '[ {"id": 1, "username": "johndoe", "email": "johndoe@localhost.com", "password": "secret"}, {"id": 2, "username": "janedoe", "email": "janedoe@localhost.com", "password": "secret"} ]'
+ *                  value: '[ {"id": 1, "username": "johndoe", "email": "johndoe@localhost.com" }, {"id": 2, "username": "janedoe", "email": "janedoe@localhost.com" } ]'
  *        204:
  *          description: No Content
  *          content:
@@ -131,7 +131,7 @@ userRouter.route("/:id(\\d+)").get(usersController.getUser);
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "User Created" }'
+ *                  value: '{ "message": "User Created" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -168,7 +168,7 @@ userRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "User Updated" }'
+ *                  value: '{ "message": "User Updated" }'
  *        401:
  *          description: Unauthorized
  *          content:
@@ -205,7 +205,7 @@ userRouter
  *              examples:
  *                jsonObject:
  *                  summary: An example JSON response
- *                  value: '{ Message: "User Deleted" }'
+ *                  value: '{ "message": "User Deleted" }'
  *        401:
  *          description: Unauthorized
  *          content:

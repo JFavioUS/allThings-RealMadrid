@@ -1,11 +1,13 @@
 {
+  "exclude": ["./coverage", "./dist", "__tests__", "jest.config.js"],
   "compilerOptions": {
     "target": "esnext",
     "module": "commonjs",
     "esModuleInterop": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "strictNullChecks": true
   },
   "lib": ["es2015"]
 }
