@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS public.users (
     id SERIAL CONSTRAINT users_pk PRIMARY KEY,
-    username TEXT,
+    username TEXT UNIQUE NOT NULL,
     admin BOOLEAN,
-    email TEXT,
+    email TEXT UNIQUE NOT NULL,
     password TEXT
 );
 
